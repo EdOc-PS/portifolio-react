@@ -2,11 +2,26 @@ import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal"
 import ProjectCard from "@/components/ui/ProjectCard"
 import Badge from "@/components/ui/Badge"
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { GetRequest } from "@/service/getRequest";
 
 const Projects = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const technologies = ["React", "TypeScript", "Tailwind CSS", "Vite", "React Router"];
+
+    const getProjects = async () => {
+        const response = await GetRequest("/api/projects");
+
+        if (!response) {
+            console.error("Ocorreu um erro ao obter os projetos.");
+            return;
+        }
+        console.log("Projetos obtidos:", response);
+    }
+
+    useEffect(() => {
+        getProjects();
+    }, [])
 
     return (
         <section id="projects" className="py-20 w-full">

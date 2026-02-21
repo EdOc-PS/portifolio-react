@@ -10,7 +10,9 @@ export default async function handler(req, res) {
         const db = client.db("portfolio");
         const projects = await db.collection("projects").find({}).toArray();
 
+        console.log(projects);
         res.status(200).json(projects);
+
     } catch (error) {
         res.status(500).json({ error: "Erro ao buscar projetos" });
     } finally {
