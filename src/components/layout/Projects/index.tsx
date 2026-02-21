@@ -10,13 +10,13 @@ const Projects = () => {
     const technologies = ["React", "TypeScript", "Tailwind CSS", "Vite", "React Router"];
 
     const getProjects = async () => {
-        const response = await GetRequest("/api/projects");
+        const response = await GetRequest("http://localhost:5000/projects");
 
         if (!response) {
             console.error("Ocorreu um erro ao obter os projetos.");
             return;
         }
-        console.log("Projetos obtidos:", response);
+        console.log(response);
     }
 
     useEffect(() => {
