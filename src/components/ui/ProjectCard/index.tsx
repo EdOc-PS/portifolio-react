@@ -43,7 +43,7 @@ const ProjectCard = ({ title, id, viewModal, getDetails }: ProjectsCardProps) =>
             onMouseLeave={handleMouseLeave}
             onClick={handleActiveModal}
        >
-            <img src="https://i.redd.it/d95vefqn7nn71.png" alt="" className=" h-90 object-cover rounded-xl transition-all hover:scale-101" />
+            {/* <img src="https://i.redd.it/d95vefqn7nn71.png" alt="" className=" h-90 object-cover rounded-xl transition-all hover:scale-101" /> */}
             <div className="w-full relative ">
                 <h1 className=" text-lg font-bold">{title}</h1>
                 <div className="absolute right-0 bottom-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
