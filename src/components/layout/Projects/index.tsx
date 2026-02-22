@@ -39,8 +39,9 @@ const Projects = () => {
             console.error("Ocorreu um erro ao obter os detalhes do projeto.");
             return;
         }
-        console.log(response.projects);
-        setDetails(response.projects);
+
+        console.log(response.project);
+        setDetails(response.project);
     }
 
     useEffect(() => {
