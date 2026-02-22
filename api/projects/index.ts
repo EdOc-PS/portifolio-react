@@ -1,4 +1,4 @@
-import { connectDB } from "../../lib/mongoose";
+import { connectDB } from "../../lib/mongoose.js";
 import Project from "../../models/Project";
 
 export default async function handler(req: any, res: any) {
