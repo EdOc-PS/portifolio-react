@@ -4,19 +4,44 @@ import ProjectCard from "@/components/ui/ProjectCard"
 import Badge from "@/components/ui/Badge"
 import { useEffect, useState } from "react";
 import { GetRequest } from "@/service/getRequest";
+import { Link } from "react-router-dom";
+
+
+interface Project {
+    title: string;
+    _id: string;
+    description: string;
+    technologies: string[];
+    github: string;
+    live: string;
+}
 
 const Projects = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const technologies = ["React", "TypeScript", "Tailwind CSS", "Vite", "React Router"];
 
+    const [projects, setProjects] = useState<Project[]>([]);
+    const [details, setDetails] = useState<Project | null>(null);
+
     const getProjects = async () => {
         const response = await GetRequest("http://localhost:5000/projects");
 
-        if (!response) {
+        if (!response.success) {
             console.error("Ocorreu um erro ao obter os projetos.");
             return;
         }
-        console.log(response);
+        setProjects(response.projects);
+    }
+
+    const getDetails = async (id: string) => {
+        const response = await GetRequest(`http://localhost:5000/projects/${id}`);
+
+        if (!response.success) {
+            console.error("Ocorreu um erro ao obter os detalhes do projeto.");
+            return;
+        }
+        console.log(response.projects);
+        setDetails(response.projects);
     }
 
     useEffect(() => {
@@ -31,36 +56,33 @@ const Projects = () => {
                         Projetos
                     </h1>
                     <p className="w-lg  text-center">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam natus totam minus consequatur, est inventore suscipit accusamus deleniti voluptate necessitatibus delectus.
+                        Confira a seguir alguns dos projetos que desenvolvi, refletindo minhas habilidades e a aplicação de tecnologias para resolver desafios reais.
                     </p>
                 </div>
 
 
 
                 <div className="flex gap-8 flex-wrap items-center justify-center">
-                    <ProjectCard title="Amanda" viewModal={setIsModalOpen} />
-                    <ProjectCard title="Amanda" viewModal={setIsModalOpen} />
-                    <ProjectCard title="Amanda" viewModal={setIsModalOpen} />
-                    <ProjectCard title="Amanda" viewModal={setIsModalOpen} />
-                    <ProjectCard title="Amanda" viewModal={setIsModalOpen} />
+                    {projects.map((project) => (
+                        <ProjectCard id={project._id} key={project._id} title={project.title} viewModal={setIsModalOpen} getDetails={getDetails} />
+                    ))}
                 </div>
             </div>
 
+            {/* Modal */}
             <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <div className="flex flex-col justify-between h-full">
                     <img src="https://i.redd.it/d95vefqn7nn71.png" alt="" className="w-full h-64 object-cover rounded-xl mb-4" />
                     <div className="mb-4">
-                        <h1 className="text-md font-bold mb-3">Projeto X</h1>
-                        <p className="font-light">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                            Fuga, qui? Expedita odit accusantium illo voluptatibus odio, dolor commodi error reprehenderit consequatur quidem.
-                            Quasi recusandae harum, sed cumque dicta unde. Quaerat!
+                        <h1 className="text-md font-bold mb-3">{details?.title}</h1>
+                        <p className="font-light h-full">
+                            {details?.description}
                         </p>
                     </div>
                     <div className="mb-4">
                         <h1 className="text-md font-medium mb-3">Tecnologias</h1>
                         <div className="flex flex-wrap gap-2">
-                            {technologies.map((tech, index) => (
+                            {details?.technologies.map((tech, index) => (
                                 <Badge key={index} variant="liquidGlass">
                                     {tech}
                                 </Badge>
@@ -68,8 +90,14 @@ const Projects = () => {
                         </div>
                     </div>
                     <div className="flex gap-4">
-                        <Button isFullWidth icon="InternetIcon">Site </Button>
-                        <Button isFullWidth variant="liquidGlass">Repositorio  🦎</Button>
+                        {details?.live && (
+                            <Button isFullWidth icon="InternetIcon">
+                                <Link to={details?.live || "#"} target="_blank">Site</Link>
+                            </Button>
+                        )}
+                        <Button isFullWidth variant="liquidGlass">
+                            <Link to={details?.github || "#"} target="_blank">Repositório  🦎</Link>
+                        </Button>
                     </div>
                 </div>
             </Modal>

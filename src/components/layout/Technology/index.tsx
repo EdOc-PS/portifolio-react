@@ -31,7 +31,7 @@ const Technology = () => {
                         Tecnologias
                     </h1>
                     <p className="w-lg  text-center ">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam natus totam minus consequatur, est inventore suscipit accusamus deleniti voluptate necessitatibus delectus.
+                        Aqui estão algumas das tecnologias e ferramentas que domino, cada uma representando um passo na minha jornada de aprendizado e desenvolvimento como profissional de tecnologia.
                     </p>
                 </div>
 

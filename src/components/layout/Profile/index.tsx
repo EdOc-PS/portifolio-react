@@ -62,7 +62,7 @@ const Profile = () => {
                         Trajetória
                     </h1>
                     <p className="w-lg">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam natus totam minus consequatur, est inventore suscipit accusamus deleniti voluptate necessitatibus delectus.
+                        Ao longo da minha trajetória, busquei constantemente aprimorar meus conhecimentos e habilidades, com ênfase em áreas essenciais para o desenvolvimento profissional na área de tecnologia.
                     </p>
                 </div>
 

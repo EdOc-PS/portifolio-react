@@ -13,7 +13,6 @@ const Main: React.FC = () => {
       <Header />
 
       <Home />
-
       <Profile />
       <Technology />
       <Projects />

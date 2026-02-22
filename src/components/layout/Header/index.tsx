@@ -1,11 +1,16 @@
 import { useState } from 'react'
 
 import Button from '../../ui/Button'
+import curriculoPdf from '../../../assets/curriculo_eduardo_octávio.pdf'
 
 import { Icon } from '../../ui/Icon'
 
 const Header = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+    const handleOpenCurriculo = () => {
+        window.open(curriculoPdf, '_blank', 'noopener,noreferrer')
+    }
 
     const scrollToSection = (sectionId: string) => {
         const element = document.getElementById(sectionId);
@@ -40,14 +45,14 @@ const Header = () => {
 
                     {/* Menu Desktop */}
                     <ul className='hidden md:flex gap-6 lg:gap-8 items-center'>
-                        <li><p className='font-semibold text-sm cursor-pointer hover:text-gray-300 transition-colors' onClick={() => scrollToSection('profile')}>Perfil</p></li>
+                        <li><p className='font-semibold text-sm cursor-pointer hover:text-gray-300 transition-colors' onClick={() => scrollToSection('home')}>Perfil</p></li>
                         <li><p className='font-semibold text-sm cursor-pointer hover:text-gray-300 transition-colors' onClick={() => scrollToSection('profile')}>Carreira</p></li>
                         <li><p className='font-semibold text-sm cursor-pointer hover:text-gray-300 transition-colors' onClick={() => scrollToSection('projects')}>Projetos</p></li>
                     </ul>
 
                     {/* Botão Desktop */}
                     <div className="hidden md:block">
-                        <Button icon='ArrowDownRight01Icon' >Curriculo</Button>
+                        <Button icon='ArrowDownRight01Icon' onClick={handleOpenCurriculo}>Curriculo</Button>
                     </div>
 
                     {/* Botão Hamburger Mobile */}
@@ -69,7 +74,7 @@ const Header = () => {
                             <li><p className='font-semibold text-sm hover:text-blue-600 transition-colors cursor-pointer' onClick={() => scrollToSection('projects')}>Projetos</p></li>
                         </ul>
                         <div className="mt-4">
-                            <Button>Curriculo</Button>
+                            <Button onClick={handleOpenCurriculo}>Curriculo</Button>
                         </div>
                     </div>
                 )}

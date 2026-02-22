@@ -1,30 +1,36 @@
 import Button from '@/components/ui/Button'
+import curriculoPdf from '@/assets/curriculo_eduardo_octávio.pdf'
 
 import { Icon } from '@/components/ui/Icon'
 import { Link } from 'react-router'
 
 
 const Home = () => {
+    const handleOpenCurriculo = () => {
+        window.open(curriculoPdf, '_blank', 'noopener,noreferrer')
+    }
+
     return (
-        <section className="mt-20 w-full">
+        <section id="home" className="mt-20 w-full">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center flex-col gap-10">
                 <div className="mt-30">
                     <h1 className="font-['IBM Plex Mono'] text-8xl font-light text-center">
-                        Hello Amigo
+                        Hello
+                        <span className="text-indigo-300"> There </span>
                         <br />
-                        <i className="text-indigo-300"> There </i>
-                        Lorem ad
+                        Bem Vindo!
                     </h1>
 
+
                     <p className="text-center font-medium mt-4" >
-                        Lorem bla bla gteste asda Sas. asdasd asd.
+                        Olá, sou o Eduardo, desenvolvedor Web/Mobile
                         <br />
-                        We care about your experience, not your data.
+                        Apaixonado pela tecnologia e inovações.
                     </p>
                 </div>
 
                 <div className="flex items-center gap-6">
-                    <Button icon='ArrowDownRight01Icon' >Curriculo</Button>
+                    <Button icon='ArrowDownRight01Icon' onClick={handleOpenCurriculo}>Curriculo</Button>
                     <Button variant="liquidGlass">
                         <Link target="_blank" to="https://github.com/EdOc-PS?tab=repositories">Ver Repositorios 🦎</Link>
                     </Button>

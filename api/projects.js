@@ -9,8 +9,7 @@ export default async function handler(req, res) {
         await client.connect();
         const db = client.db("portfolio");
         const projects = await db.collection("projects").find({}).toArray();
-
-        console.log(projects);
+        
         res.status(200).json(projects);
 
     } catch (error) {

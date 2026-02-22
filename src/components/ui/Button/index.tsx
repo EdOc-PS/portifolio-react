@@ -8,9 +8,10 @@ interface Props {
     variant?: "primary" | "secondary" | "liquidGlass"   
     icon?: keyof typeof Icons;
     isFullWidth?: boolean;
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function Button({ children, icon, variant = "primary", isFullWidth = false }: Props) {
+export default function Button({ children, icon, variant = "primary", isFullWidth = false, onClick }: Props) {
     const variantStyles = {
         primary: "bg-gray-edoc-500 text-neutral-edoc-500",
         secondary: "bg-white-500 text-gray-edoc-500",
@@ -25,6 +26,7 @@ export default function Button({ children, icon, variant = "primary", isFullWidt
 
     return (
         <button 
+            onClick={onClick}
             className={`${variantStyles[variant]} ${isFullWidth ? 'w-full justify-center' : ''} 
                         rounded-xl py-3.5 px-5 cursor-pointer flex items-center gap-3 font-medium transition-all duration-300 `}>
             <>
