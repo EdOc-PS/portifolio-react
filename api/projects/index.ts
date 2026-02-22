@@ -1,5 +1,5 @@
 import { connectDB } from "../../lib/mongoose.js";
-import Project from "../../models/Project";
+import Project from "../../models/Project.ts";
 
 export default async function handler(req: any, res: any) {
   if (req.method !== "GET") {
