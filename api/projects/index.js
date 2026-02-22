@@ -1,7 +1,7 @@
 import { connectDB } from "../../lib/mongoose.js";
-import Project from "../../models/Project.ts";
+import Project from "../../models/Project.js";
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ message: "Método não permitido" });
   }
