@@ -45,7 +45,7 @@ const Header = () => {
 
                     {/* Menu Desktop */}
                     <ul className='hidden md:flex gap-6 lg:gap-8 items-center'>
-                        <li><p className='font-semibold text-sm cursor-pointer hover:text-gray-300 transition-colors' onClick={() => scrollToSection('home')}>Perfil</p></li>
+                        <li><p className='font-semibold text-sm cursor-pointer hover:text-gray-300 transition-colors' onClick={() => scrollToSection('home')}>Home</p></li>
                         <li><p className='font-semibold text-sm cursor-pointer hover:text-gray-300 transition-colors' onClick={() => scrollToSection('profile')}>Carreira</p></li>
                         <li><p className='font-semibold text-sm cursor-pointer hover:text-gray-300 transition-colors' onClick={() => scrollToSection('projects')}>Projetos</p></li>
                     </ul>
@@ -69,7 +69,7 @@ const Header = () => {
                 {isMenuOpen && (
                     <div className="md:hidden pb-4 border-t border-gray-edoc-200">
                         <ul className='flex flex-col gap-3 pt-4'>
-                            <li><p className='font-semibold text-sm hover:text-blue-600 transition-colors cursor-pointer' onClick={() => scrollToSection('profile')}>Perfil</p></li>
+                            <li><p className='font-semibold text-sm hover:text-blue-600 transition-colors cursor-pointer' onClick={() => scrollToSection('home')}>Home</p></li>
                             <li><p className='font-semibold text-sm hover:text-blue-600 transition-colors cursor-pointer' onClick={() => scrollToSection('profile')}>Carreira</p></li>
                             <li><p className='font-semibold text-sm hover:text-blue-600 transition-colors cursor-pointer' onClick={() => scrollToSection('projects')}>Projetos</p></li>
                         </ul>

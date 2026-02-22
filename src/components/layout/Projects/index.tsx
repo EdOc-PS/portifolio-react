@@ -2,9 +2,11 @@ import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal"
 import ProjectCard from "@/components/ui/ProjectCard"
 import Badge from "@/components/ui/Badge"
+import ModalSkeleton from "@/components/ui/Loading/ModalSkeleton";
 import { useEffect, useState } from "react";
 import { GetRequest } from "@/service/getRequest";
 import { Link } from "react-router-dom";
+import ProjectSkeleton from "@/components/ui/Loading/ProjectSkeleton";
 
 
 interface Project {
@@ -22,25 +24,42 @@ const Projects = () => {
     const [projects, setProjects] = useState<Project[]>([]);
     const [details, setDetails] = useState<Project | null>(null);
 
-    const getProjects = async () => {
-        const response = await GetRequest("http://localhost:5000/projects");
+    const [loading, setLoading] = useState<boolean>(false);
 
-        if (!response.success) {
-            console.error("Ocorreu um erro ao obter os projetos.");
-            return;
+    const getProjects = async () => {
+        setLoading(true);
+        try {
+            const response = await GetRequest("http://localhost:5000/projects");
+
+            if (!response.success) {
+                console.error("Ocorreu um erro ao obter os projetos.");
+                return;
+            }
+            setProjects(response.projects);
+        } catch (error) {
+            console.error("Ocorreu um erro ao obter os projetos:", error);
+        } finally {
+            setLoading(false);
         }
-        setProjects(response.projects);
     }
 
     const getDetails = async (id: string) => {
-        const response = await GetRequest(`http://localhost:5000/projects/${id}`);
+        setLoading(true);
+        try {
+            const response = await GetRequest(`http://localhost:5000/projects/${id}`);
 
-        if (!response.success) {
-            console.error("Ocorreu um erro ao obter os detalhes do projeto.");
-            return;
+            if (!response.success) {
+                console.error("Ocorreu um erro ao obter os detalhes do projeto.");
+                return;
+            }
+            console.log(response.projects);
+            setDetails(response.projects);
+
+        } catch (error) {
+            console.error("Ocorreu um erro ao obter os detalhes do projeto:", error);
+        } finally {
+            setLoading(false);
         }
-        console.log(response.projects);
-        setDetails(response.projects);
     }
 
     useEffect(() => {
@@ -62,43 +81,57 @@ const Projects = () => {
 
 
                 <div className="flex gap-8 flex-wrap items-center justify-center">
-                    {projects.map((project) => (
-                        <ProjectCard id={project._id} key={project._id} title={project.title} viewModal={setIsModalOpen} getDetails={getDetails} />
-                    ))}
+                    {loading ? (
+                        <>
+                            <ProjectSkeleton />
+                            <ProjectSkeleton />
+                            <ProjectSkeleton />
+                            <ProjectSkeleton />
+                        </>
+                    ) : (
+                        projects.map((project) => (
+                            <ProjectCard id={project._id} key={project._id} title={project.title} viewModal={setIsModalOpen} getDetails={getDetails} />
+                        ))
+                    )}
                 </div>
             </div>
 
             {/* Modal */}
             <Modal open={isModalOpen} onClose={() => setIsModalOpen(false)}>
-                <div className="flex flex-col justify-between h-full">
-                    <img src="https://i.redd.it/d95vefqn7nn71.png" alt="" className="w-full h-64 object-cover rounded-xl mb-4" />
-                    <div className="mb-4">
-                        <h1 className="text-md font-bold mb-3">{details?.title}</h1>
-                        <p className="font-light h-full">
-                            {details?.description}
-                        </p>
-                    </div>
-                    <div className="mb-4">
-                        <h1 className="text-md font-medium mb-3">Tecnologias</h1>
-                        <div className="flex flex-wrap gap-2">
-                            {details?.technologies.map((tech, index) => (
-                                <Badge key={index} variant="liquidGlass">
-                                    {tech}
-                                </Badge>
-                            ))}
+                {loading ? (
+                    <ModalSkeleton />
+                ) : (
+                    <div className="flex flex-col justify-between h-full">
+                        <img src="https://i.redd.it/d95vefqn7nn71.png" alt="" className="w-full h-64 object-cover rounded-xl mb-4" />
+                        <div className="mb-4">
+                            <h1 className="text-md font-bold mb-3">{details?.title}</h1>
+                            <p className="font-light h-full">
+                                {details?.description}
+                            </p>
+                        </div>
+                        <div className="mb-4">
+                            <h1 className="text-md font-medium mb-3">Tecnologias</h1>
+                            <div className="flex flex-wrap gap-2">
+                                {details?.technologies.map((tech, index) => (
+                                    <Badge key={index} variant="liquidGlass">
+                                        {tech}
+                                    </Badge>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="flex gap-4">
+                            {details?.live && (
+                                <Button isFullWidth icon="InternetIcon">
+                                    <Link to={details?.live || "#"} target="_blank">Site</Link>
+                                </Button>
+                            )}
+                            <Button isFullWidth variant="liquidGlass">
+                                <Link to={details?.github || "#"} target="_blank">Repositório  🦎</Link>
+                            </Button>
                         </div>
                     </div>
-                    <div className="flex gap-4">
-                        {details?.live && (
-                            <Button isFullWidth icon="InternetIcon">
-                                <Link to={details?.live || "#"} target="_blank">Site</Link>
-                            </Button>
-                        )}
-                        <Button isFullWidth variant="liquidGlass">
-                            <Link to={details?.github || "#"} target="_blank">Repositório  🦎</Link>
-                        </Button>
-                    </div>
-                </div>
+                )}
+
             </Modal>
 
 
