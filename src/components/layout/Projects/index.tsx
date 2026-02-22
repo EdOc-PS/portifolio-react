@@ -18,7 +18,6 @@ interface Project {
 
 const Projects = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-    const technologies = ["React", "TypeScript", "Tailwind CSS", "Vite", "React Router"];
 
     const [projects, setProjects] = useState<Project[]>([]);
     const [details, setDetails] = useState<Project | null>(null);
